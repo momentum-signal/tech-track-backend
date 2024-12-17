@@ -4,10 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.techtrack.backend.Internship.model.Internship;
+import com.techtrack.backend.Internship.model.InternshipModel;
 import com.techtrack.backend.Internship.service.InternshipService;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -18,13 +19,14 @@ public class InternshipController {
     private InternshipService internshipService;
 
     @PostMapping
-    public ResponseEntity<Internship> createInternship(@RequestBody Internship internship) {
-        Internship createdInternship = internshipService.createInternship(internship);
+    public ResponseEntity<InternshipModel> createInternship(@RequestBody InternshipModel internshipBody) {
+        internshipBody.setCreatedDate(LocalDateTime.now());
+        InternshipModel createdInternship = internshipService.createInternship(internshipBody);
         return new ResponseEntity<>(createdInternship, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Internship> getAllInternships() {
+    public List<InternshipModel> getAllInternships() {
         return internshipService.getAllInternships();
     }
 }
