@@ -1,8 +1,10 @@
 package com.techtrack.backend.Internship.model;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
@@ -11,15 +13,16 @@ import java.time.LocalDateTime;
 public class InternshipModel {
 
     @Id
+    @NotNull(message = "ID is required")
     private String id;
+    @NotNull(message = "Company name is required")
     private String companyName;
+    @NotNull(message = "Internship title is required")
     private String internshipTitle;
+    @NotNull(message = "Internship title is required")
+    private String internshipDescription;
     private String location;  // Optional field
-
     private String contactInformation;  // Optional field
-
-
-
     private String notes;  // Optional field
     private LocalDateTime createdDate;
 
@@ -45,6 +48,13 @@ public class InternshipModel {
         this.internshipTitle = internshipTitle;
     }
 
+    public String getInternshipDescription() {
+        return internshipDescription;
+    }
+    public void setInternshipDescription(String internshipDescription) {
+        this.internshipDescription = internshipDescription;
+    }
+
     public void setLocation(String internLocation) {
         this.location = internLocation;
     }
@@ -58,6 +68,7 @@ public class InternshipModel {
     public String getContactInformation() {
         return contactInformation;
     }
+
     public void setNotes(String notes) {
         this.notes = notes;
     }
@@ -65,13 +76,10 @@ public class InternshipModel {
         return notes;
     }
 
-
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
-
-
 }
