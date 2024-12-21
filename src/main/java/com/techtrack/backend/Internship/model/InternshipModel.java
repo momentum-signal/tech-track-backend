@@ -23,6 +23,7 @@ public class InternshipModel {
     private String internshipTitle;
     @NotNull(message = "Internship title is required")
     private String internshipDescription;
+    @NotNull(message = "Salary range is required")
     private String salaryRange;
 
     private String location;  // Optional field
