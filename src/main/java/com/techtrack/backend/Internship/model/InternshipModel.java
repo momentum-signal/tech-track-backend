@@ -19,12 +19,12 @@ public class InternshipModel {
     private String companyName;
     @NotNull(message = "Company logo url is required")
     private String companyLogoUrl;
-
     @NotNull(message = "Internship title is required")
     private String internshipTitle;
     @NotNull(message = "Internship title is required")
     private String internshipDescription;
     private String salaryRange;
+
     private String location;  // Optional field
     private String contactInformation;  // Optional field
     private String notes;  // Optional field

@@ -68,9 +68,9 @@ public class InternshipController {
                     404
             );
         }
+
         return ResponseHandler.sendResponse(responseProps);
     }
-
 
     // Get single internship data by ID
     @GetMapping("/{id}")
