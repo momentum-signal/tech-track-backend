@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,6 +23,11 @@ public class ApplicationService {
 
     // Create a new application
     public ApplicationModel createApplication(ApplicationModel application) {
+        //check if the internship ID is valid
+        Optional<InternshipModel> internship = internshipRepository.findById(application.getInternshipId());
+        if(internship.isEmpty()){
+            throw new IllegalArgumentException("Invalid Internship ID: "+ application.getInternshipId());
+        }
         return applicationRepository.save(application);
     }
 

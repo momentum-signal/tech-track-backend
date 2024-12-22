@@ -25,27 +25,26 @@ public class ApplicationController {
     // Create a new internship
     @PostMapping
     public ResponseEntity<Object> createApplication(@RequestBody ApplicationModel applicationBody) {
+        try{
         ApplicationModel createdApplication = applicationService.createApplication(applicationBody);
 
-        ResponseProps<ApplicationModel> responseProps;
-        if (createdApplication != null) {
-            responseProps = new ResponseProps<>(
+            ResponseProps<ApplicationModel>responseProps = new ResponseProps<>(
                     true,
                     "Application created successfully",
                     createdApplication,
                     200
             );
-        } else {
-            responseProps = new ResponseProps<>(
+            return ResponseHandler.sendResponse(responseProps);
+        } catch (IllegalArgumentException e) {
+            ResponseProps<Void> responseProps = new ResponseProps<>(
                     false,
-                    "Failed to create application",
+                    "Internship ID is not valid",
                     null,
                     404
             );
+            return ResponseHandler.sendResponse(responseProps);
         }
-        return ResponseHandler.sendResponse(responseProps);
     }
-
     // Get all internships data
     @GetMapping("/{email}")
     public ResponseEntity<ResponseProps<List<ApplicationWithInternshipDTO>>> getApplicationsByEmail(
