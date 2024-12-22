@@ -1,10 +1,5 @@
 package com.techtrack.backend.Application.model;
 
-<<<<<<< HEAD
-public class ApplicationModel {
-    public void temp(String[] args){
-        System.out.println("InternshipModel");
-=======
 import com.techtrack.backend.Internship.model.InternshipModel;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -43,6 +38,6 @@ public class ApplicationModel {
 
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
->>>>>>> 2c90720468fd850b6c58922b9c3b8dd8e4f4e577
+
     }
 }

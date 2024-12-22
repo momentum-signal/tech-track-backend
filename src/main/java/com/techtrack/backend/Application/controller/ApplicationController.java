@@ -73,11 +73,11 @@ public class ApplicationController {
 
         return ResponseEntity.status(responseProps.getStatusCode()).body(responseProps);
     }
-<<<<<<< HEAD
+
 
     //Delete an application
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteApplication(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> deleteApplication(@PathVariable("id") String id) {
         boolean isDeleted = applicationService.deleteApplication(id);
 
         ResponseProps<Void> responseProps;
@@ -98,8 +98,6 @@ public class ApplicationController {
         }
         return ResponseHandler.sendResponse(responseProps);
     }
-=======
->>>>>>> 2c90720468fd850b6c58922b9c3b8dd8e4f4e577
 }
 
 
