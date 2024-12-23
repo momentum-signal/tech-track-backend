@@ -28,6 +28,12 @@ public class ApplicationService {
         if(internship.isEmpty()){
             throw new IllegalArgumentException("Invalid Internship ID: "+ application.getInternshipId());
         }
+
+        //Check if the user has already applied for the internship
+        List<ApplicationModel> exisitingApplications = applicationRepository.findByUserEmail(application.getUserEmail(), application.getInternshipId());
+       if(!exisitingApplications.isEmpty()){
+              throw new IllegalArgumentException("User has already applied for this internship");
+        }
         return applicationRepository.save(application);
     }
 

@@ -36,11 +36,21 @@ public class ApplicationController {
             );
             return ResponseHandler.sendResponse(responseProps);
         } catch (IllegalArgumentException e) {
+            String errorMessage = e.getMessage();
+            int statusCode;
+
+            if(errorMessage.contains("Invalid Internship ID")){
+                statusCode = 404;
+            }else if(errorMessage.contains("already applied")){
+                statusCode = 409;
+            }else{
+                statusCode = 400;
+            }
             ResponseProps<Void> responseProps = new ResponseProps<>(
                     false,
-                    "Internship ID is not valid",
+                    e.getMessage(),
                     null,
-                    404
+                    statusCode
             );
             return ResponseHandler.sendResponse(responseProps);
         }
