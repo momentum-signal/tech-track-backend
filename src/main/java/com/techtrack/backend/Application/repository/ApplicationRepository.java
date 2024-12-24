@@ -11,5 +11,8 @@ import java.util.*;
 public interface ApplicationRepository extends MongoRepository<ApplicationModel, String> {
     // Get all application by user email
     List<ApplicationModel> findByUserEmail(String userEmail);
+
+    //Check if an application exists by user email and internship ID
+    List<ApplicationModel> findByUserEmail(String userEmail, String internshipId);
 }
 

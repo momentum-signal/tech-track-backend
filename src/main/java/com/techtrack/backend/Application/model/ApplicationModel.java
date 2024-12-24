@@ -38,5 +38,6 @@ public class ApplicationModel {
 
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
+
     }
 }
