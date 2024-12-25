@@ -34,6 +34,9 @@ public class ApplicationService {
        if(!exisitingApplications.isEmpty()){
               throw new IllegalArgumentException("User has already applied for this internship");
         }
+
+        //Set the status to "Applied" before saving
+        application.setApplicationStatus(ApplicationModel.ApplicationStatusEnum.Applied);
         return applicationRepository.save(application);
     }
 

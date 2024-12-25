@@ -26,6 +26,8 @@ public class ApplicationController {
     @PostMapping
     public ResponseEntity<Object> createApplication(@RequestBody ApplicationModel applicationBody) {
         try{
+        //Set the initial status to "Applied" before sending to the service
+        applicationBody.setApplicationStatus(ApplicationModel.ApplicationStatusEnum.Applied);
         ApplicationModel createdApplication = applicationService.createApplication(applicationBody);
 
             ResponseProps<ApplicationModel>responseProps = new ResponseProps<>(
