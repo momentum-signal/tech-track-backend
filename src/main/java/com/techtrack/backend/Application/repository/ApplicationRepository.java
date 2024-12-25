@@ -13,6 +13,6 @@ public interface ApplicationRepository extends MongoRepository<ApplicationModel,
     List<ApplicationModel> findByUserEmail(String userEmail);
 
     //Check if an application exists by user email and internship ID
-    List<ApplicationModel> findByUserEmail(String userEmail, String internshipId);
+    List<ApplicationModel> findByUserEmailAndInternshipId(String userEmail, String internshipId);
 }
 

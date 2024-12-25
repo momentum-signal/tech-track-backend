@@ -30,7 +30,7 @@ public class ApplicationService {
         }
 
         //Check if the user has already applied for the internship
-        List<ApplicationModel> exisitingApplications = applicationRepository.findByUserEmail(application.getUserEmail(), application.getInternshipId());
+        List<ApplicationModel> exisitingApplications = applicationRepository.findByUserEmailAndInternshipId(application.getUserEmail(), application.getInternshipId());
        if(!exisitingApplications.isEmpty()){
               throw new IllegalArgumentException("User has already applied for this internship");
         }
