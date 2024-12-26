@@ -93,4 +93,29 @@ public class InternshipController {
 
         return ResponseHandler.sendResponse(responseProps);
     }
+    
+    //Delete internship data
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteInternshipById(@PathVariable String id) {
+        boolean isDeleted = internshipService.deleteInternship(id);
+
+        ResponseProps<InternshipModel> responseProps;
+        if(isDeleted) {
+            responseProps = new ResponseProps<>(
+                true,
+                "Internship deleted successfully",
+                null,
+                200
+            );
+        } else {
+            responseProps = new ResponseProps<InternshipModel>(
+                false,
+                "Internship not found",
+                null,
+                404
+            );
+        }
+        
+        return ResponseHandler.sendResponse(responseProps);
+    }
 }

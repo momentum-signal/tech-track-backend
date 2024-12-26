@@ -16,7 +16,16 @@ public class ApplicationModel {
     private String userEmail;
     @NotNull(message = "Internship ID is required")
     private String internshipId;
+    @NotNull(message = "Status is required")
+    private ApplicationStatusEnum applicationStatus;
 
+    public enum ApplicationStatusEnum {
+        Applied,
+        Awaiting,
+        Interview,
+        Selected,
+        Rejected
+    }
 
     public String getId() {
         return id;
@@ -38,5 +47,13 @@ public class ApplicationModel {
 
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
+
+    }
+    public ApplicationStatusEnum getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(ApplicationStatusEnum applicationStatus) {
+        this.applicationStatus = applicationStatus;
     }
 }

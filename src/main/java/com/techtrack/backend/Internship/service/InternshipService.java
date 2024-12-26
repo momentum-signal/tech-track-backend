@@ -30,4 +30,15 @@ public class InternshipService {
     public Optional<InternshipModel> getSingleInternship(String id) {
         return internshipRepository.findById(id);
     }
+    
+    //Delete internship data
+    public boolean deleteInternship(String id) {
+        if(internshipRepository.existsById(id)) {
+            internshipRepository.deleteById(id);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

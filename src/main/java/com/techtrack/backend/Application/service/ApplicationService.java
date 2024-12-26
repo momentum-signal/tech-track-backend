@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,6 +23,20 @@ public class ApplicationService {
 
     // Create a new application
     public ApplicationModel createApplication(ApplicationModel application) {
+        //check if the internship ID is valid
+        Optional<InternshipModel> internship = internshipRepository.findById(application.getInternshipId());
+        if(internship.isEmpty()){
+            throw new IllegalArgumentException("Invalid Internship ID: "+ application.getInternshipId());
+        }
+
+        //Check if the user has already applied for the internship
+        List<ApplicationModel> exisitingApplications = applicationRepository.findByUserEmailAndInternshipId(application.getUserEmail(), application.getInternshipId());
+       if(!exisitingApplications.isEmpty()){
+              throw new IllegalArgumentException("User has already applied for this internship");
+        }
+
+        //Set the status to "Applied" before saving
+        application.setApplicationStatus(ApplicationModel.ApplicationStatusEnum.Applied);
         return applicationRepository.save(application);
     }
 
@@ -37,5 +52,13 @@ public class ApplicationService {
 
                 return new ApplicationWithInternshipDTO(application.getId(), application.getUserEmail(), internship);
             }).toList();
+    }
+    //Delete an application
+    public boolean deleteApplication(String id) {
+        if(applicationRepository.existsById(id)){        
+            applicationRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
