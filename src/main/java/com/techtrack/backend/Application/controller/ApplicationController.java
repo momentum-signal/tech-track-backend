@@ -1,6 +1,7 @@
 package com.techtrack.backend.Application.controller;
 
 import com.techtrack.backend.Application.model.ApplicationModel;
+import com.techtrack.backend.Application.model.ApplicationStatusEnum;
 import com.techtrack.backend.Application.service.ApplicationService;
 import com.techtrack.backend.Internship.model.InternshipModel;
 import com.techtrack.backend.Internship.service.InternshipService;
@@ -27,7 +28,7 @@ public class ApplicationController {
     public ResponseEntity<Object> createApplication(@RequestBody ApplicationModel applicationBody) {
         try{
         //Set the initial status to "Applied" before sending to the service
-        applicationBody.setApplicationStatus(ApplicationModel.ApplicationStatusEnum.Applied);
+        applicationBody.setApplicationStatus(ApplicationStatusEnum.applied);
         ApplicationModel createdApplication = applicationService.createApplication(applicationBody);
 
             ResponseProps<ApplicationModel>responseProps = new ResponseProps<>(
@@ -57,6 +58,7 @@ public class ApplicationController {
             return ResponseHandler.sendResponse(responseProps);
         }
     }
+
     // Get all internships data
     @GetMapping("/{email}")
     public ResponseEntity<ResponseProps<List<ApplicationWithInternshipDTO>>> getApplicationsByEmail(

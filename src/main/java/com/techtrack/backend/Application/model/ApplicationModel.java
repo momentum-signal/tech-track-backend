@@ -19,14 +19,6 @@ public class ApplicationModel {
     @NotNull(message = "Status is required")
     private ApplicationStatusEnum applicationStatus;
 
-    public enum ApplicationStatusEnum {
-        Applied,
-        Awaiting,
-        Interview,
-        Selected,
-        Rejected
-    }
-
     public String getId() {
         return id;
     }
