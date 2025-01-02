@@ -118,4 +118,28 @@ public class InternshipController {
         
         return ResponseHandler.sendResponse(responseProps);
     }
+
+    //Edit an internship
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> editInternship(@PathVariable String id, @RequestBody InternshipModel internshipBody) {
+        try{
+            InternshipModel updatedInternship = internshipService.editInternship(id, internshipBody);
+
+            ResponseProps<InternshipModel> responseProps = new ResponseProps<>(
+                true,
+                "Internship updated successfully",
+                updatedInternship,
+                200
+            );
+            return ResponseHandler.sendResponse(responseProps);
+        }catch (IllegalArgumentException e){
+            ResponseProps<Void> responseProps = new ResponseProps<>(
+                false,
+                e.getMessage(),
+                null,
+                404
+            );
+            return ResponseHandler.sendResponse(responseProps);
+        }
+    }
 }

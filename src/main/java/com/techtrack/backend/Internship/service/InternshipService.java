@@ -41,4 +41,39 @@ public class InternshipService {
             return false;
         }
     }
+
+    //Edit internship details
+    public InternshipModel editInternship (String id, InternshipModel updatedInternship){
+        Optional<InternshipModel> existingInternship = internshipRepository.findById(id);
+        if(existingInternship.isPresent()){
+            InternshipModel internship = existingInternship.get();
+            if (updatedInternship.getCompanyName() != null) {
+                internship.setCompanyName(updatedInternship.getCompanyName());
+            }
+            if (updatedInternship.getCompanyLogoUrl() != null) {
+                internship.setCompanyLogoUrl(updatedInternship.getCompanyLogoUrl());
+            }
+            if (updatedInternship.getInternshipTitle() != null) {
+                internship.setInternshipTitle(updatedInternship.getInternshipTitle());
+            }
+            if (updatedInternship.getInternshipDescription() != null) {
+                internship.setInternshipDescription(updatedInternship.getInternshipDescription());
+            }
+            if (updatedInternship.getSalaryRange() != null) {
+                internship.setSalaryRange(updatedInternship.getSalaryRange());
+            }
+            if (updatedInternship.getLocation() != null) {
+                internship.setLocation(updatedInternship.getLocation());
+            }
+            if (updatedInternship.getContactInformation() != null) {
+                internship.setContactInformation(updatedInternship.getContactInformation());
+            }
+            if (updatedInternship.getNotes() != null) {
+                internship.setNotes(updatedInternship.getNotes());
+            }
+            return internshipRepository.save(internship);
+        } else {
+            throw new IllegalArgumentException("Internship with ID: " + id + " not found");
+        }
+    }
 }
