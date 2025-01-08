@@ -65,4 +65,16 @@ public class ApplicationService {
         }
         return false;
     }
+
+    //Update application status
+    public ApplicationModel updateApplicationStatus(){
+        Optional<ApplicationModel> applicationRespository.findById(applicationId);
+        if (application.isPresent()) {
+            ApplicationModel app = application.get();
+            app.setApplicationStatus(status);
+            return applicationRepository.save(app);
+        } else {
+            throw new IllegalArgumentException("Application not found with ID: " + applicationId);
+        }
+    }
 }
