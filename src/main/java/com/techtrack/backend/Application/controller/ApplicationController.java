@@ -112,6 +112,18 @@ public class ApplicationController {
         }
         return ResponseHandler.sendResponse(responseProps);
     }
+
+    //Update application status
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Object> updateApplicationStatus(@PathVariable("id") String id, @RequestBody ApplicationStatusEnum status) {
+        try {
+            ApplicationModel updatedApplication = applicationService.updateApplicationStatus(id, status);
+            return ResponseEntity.ok(updatedApplication);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+
+        }
+    }
 }
 
 
