@@ -3,10 +3,9 @@ package com.techtrack.backend.Application.controller;
 import com.techtrack.backend.Application.model.ApplicationModel;
 import com.techtrack.backend.Application.model.ApplicationStatusEnum;
 import com.techtrack.backend.Application.service.ApplicationService;
-import com.techtrack.backend.Internship.model.InternshipModel;
-import com.techtrack.backend.Internship.service.InternshipService;
 import com.techtrack.backend.Utils.ResponseHandler;
 import com.techtrack.backend.Utils.ResponseProps;
+import com.techtrack.backend.dto.ApplicationStatusRequestDTO;
 import com.techtrack.backend.dto.ApplicationWithInternshipDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +25,12 @@ public class ApplicationController {
     // Create a new internship
     @PostMapping
     public ResponseEntity<Object> createApplication(@RequestBody ApplicationModel applicationBody) {
-        try{
-        //Set the initial status to "Applied" before sending to the service
-        applicationBody.setApplicationStatus(ApplicationStatusEnum.applied);
-        ApplicationModel createdApplication = applicationService.createApplication(applicationBody);
+        try {
+            //Set the initial status to "Applied" before sending to the service
+            applicationBody.setApplicationStatus(ApplicationStatusEnum.applied);
+            ApplicationModel createdApplication = applicationService.createApplication(applicationBody);
 
-            ResponseProps<ApplicationModel>responseProps = new ResponseProps<>(
+            ResponseProps<ApplicationModel> responseProps = new ResponseProps<>(
                     true,
                     "Application created successfully",
                     createdApplication,
@@ -42,11 +41,11 @@ public class ApplicationController {
             String errorMessage = e.getMessage();
             int statusCode;
 
-            if(errorMessage.contains("Invalid Internship ID")){
+            if (errorMessage.contains("Invalid Internship ID")) {
                 statusCode = 404;
-            }else if(errorMessage.contains("already applied")){
+            } else if (errorMessage.contains("already applied")) {
                 statusCode = 409;
-            }else{
+            } else {
                 statusCode = 400;
             }
             ResponseProps<Void> responseProps = new ResponseProps<>(
@@ -87,8 +86,6 @@ public class ApplicationController {
         return ResponseEntity.status(responseProps.getStatusCode()).body(responseProps);
     }
 
-
-
     //Delete an application
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteApplication(@PathVariable("id") String id) {
@@ -110,6 +107,32 @@ public class ApplicationController {
                     404
             );
         }
+        return ResponseHandler.sendResponse(responseProps);
+    }
+
+
+    //Update application status
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Object> updateApplicationStatus(@PathVariable("id") String applicationId, @RequestBody ApplicationStatusRequestDTO status) {
+        ApplicationModel updatedApplication = applicationService.updateApplicationStatus(applicationId, status.getApplicationStatus());
+
+        ResponseProps<ApplicationModel> responseProps;
+        if (updatedApplication != null) {
+            responseProps = new ResponseProps<>(
+                    true,
+                    "Application status updated successfully",
+                    updatedApplication,
+                    200
+            );
+        } else {
+            responseProps = new ResponseProps<>(
+                    false,
+                    "Application not found with ID: " + applicationId,
+                    null,
+                    404
+            );
+        }
+
         return ResponseHandler.sendResponse(responseProps);
     }
 }

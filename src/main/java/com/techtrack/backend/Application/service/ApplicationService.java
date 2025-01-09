@@ -46,7 +46,7 @@ public class ApplicationService {
         // Fetch applications by user email
         List<ApplicationModel> applications = applicationRepository.findByUserEmail(userEmail);
 
-        System.out.println("applications"+ applications);
+        System.out.println("applications" + applications);
 
         // Map applications with internship details
         return applications.stream().map(application -> {
@@ -64,5 +64,16 @@ public class ApplicationService {
             return true;
         }
         return false;
+    }
+
+    //Update application status
+    public ApplicationModel updateApplicationStatus(String applicationId, ApplicationStatusEnum status) {
+        ApplicationModel application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found with ID: " + applicationId));
+        // Update the status
+        application.setApplicationStatus(status);
+
+        // Save the updated application
+        return applicationRepository.save(application);
     }
 }
